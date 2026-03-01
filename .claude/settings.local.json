@@ -12,7 +12,12 @@
       "Bash(/Users/pavanbobba/Documents/HealthCare_Project/Halo-Health/backend/.venv/bin/pip install \"psycopg[binary]>=3.1.0\")",
       "Bash(.venv/bin/pip install:*)",
       "Bash(/Users/pavanbobba/Documents/HealthCare_Project/Halo-Health/backend/.venv/bin/pip install:*)",
-      "Bash(backend/.venv/bin/python:*)"
+      "Bash(backend/.venv/bin/python:*)",
+      "Bash(gh:*)",
+      "Bash(brew install:*)",
+      "Bash(ssh-keygen:*)",
+      "Bash(git remote set-url:*)",
+      "Bash(git add:*)"
     ]
   }
 }
