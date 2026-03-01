@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: aura-backend
+    env: python
+    region: oregon
+    buildCommand: cd backend && pip install -r requirements.txt
+    startCommand: cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: SECRET_KEY
+        sync: false
+      - key: PRO_MODEL
+        value: gemini-1.5-flash
+      - key: FLASH_MODEL
+        value: gemini-1.5-flash
+    healthCheckPath: /

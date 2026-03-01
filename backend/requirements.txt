@@ -1,0 +1,56 @@
+# ─── MEDORA Backend Requirements ─────────────────────────────────────────────
+
+# Web framework
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+
+# Database
+sqlalchemy==2.0.36
+aiosqlite==0.20.0
+psycopg[binary]>=3.1.0  # PostgreSQL driver for production (psycopg3)
+
+# Auth / Security
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.12
+
+# Pydantic / settings
+pydantic==2.10.3
+pydantic[email]==2.10.3
+pydantic-settings==2.7.0
+email-validator==2.2.0
+python-dotenv==1.0.1
+
+# Google Gemini
+google-generativeai==0.8.3
+
+# Vector DB
+chromadb==0.5.23
+
+# Agentic Search
+duckduckgo-search==6.3.7
+tavily-python==0.5.0
+
+# HTTP client (for insurance API proxy)
+httpx==0.27.2
+
+# Image handling (Diagnostic Agent)
+Pillow==10.4.0
+fpdf2==2.8.1
+
+# Utilities
+python-dateutil==2.9.0
+pandas>=2.0.0
+matplotlib>=3.8.0
+
+# Oculomics ML
+torch>=2.1.0
+torchvision>=0.16.0
+torchaudio>=2.1.0
+transformers>=4.40.0
+grad-cam>=1.5.0
+scikit-learn>=1.3.0
+tqdm>=4.66.0
+seaborn>=0.13.0
+opencv-python>=4.8.0
+timm>=0.9.0

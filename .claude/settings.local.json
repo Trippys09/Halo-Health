@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -m venv:*)",
+      "Bash(chmod:*)",
+      "Bash(./start.sh:*)",
+      "Bash(export:*)",
+      "Bash([ -s \"$NVM_DIR/nvm.sh\" ])",
+      "Bash(. \"$NVM_DIR/nvm.sh\")",
+      "Bash(nvm use:*)",
+      "Bash(npm run dev:*)",
+      "Bash(/Users/pavanbobba/Documents/HealthCare_Project/Halo-Health/backend/.venv/bin/pip install \"psycopg[binary]>=3.1.0\")",
+      "Bash(.venv/bin/pip install:*)",
+      "Bash(/Users/pavanbobba/Documents/HealthCare_Project/Halo-Health/backend/.venv/bin/pip install:*)",
+      "Bash(backend/.venv/bin/python:*)"
+    ]
+  }
+}

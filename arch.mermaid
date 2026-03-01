@@ -1,0 +1,161 @@
+flowchart TB
+    %% --- Styling Definitions ---
+    classDef frontend fill:#E3F2FD,stroke:#1565C0,stroke-width:2px,color:#000
+    classDef backend fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px,color:#000
+    classDef orchestrator fill:#FFF3E0,stroke:#E65100,stroke-width:3px,color:#000
+    classDef agent fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#000
+    classDef compass fill:#E0F7FA,stroke:#006064,stroke-width:2px,stroke-dasharray: 5 5,color:#000
+    classDef tool fill:#FFFDE7,stroke:#FBC02D,stroke-width:2px,color:#000
+    classDef database fill:#ECEFF1,stroke:#37474F,stroke-width:2px,color:#000
+    classDef llm fill:#EFEBE9,stroke:#4E342E,stroke-width:2px,color:#000
+
+    %% ==========================================
+    %% 1. USER INTERFACES
+    %% ==========================================
+    subgraph UI ["🌐 User Interfaces"]
+        direction TB
+        WebApp["🖥️ Web Browser<br/>(React 18, Vite, TS,<br/>Custom Vanilla CSS)"]:::frontend
+        MobileApp["📱 Mobile App<br/>(iOS/Android - Future)"]:::frontend
+        PartnerAPI["🔌 Partner API<br/>Integrations"]:::frontend
+    end
+
+    %% ==========================================
+    %% 2. BACKEND API & CORE SERVICES
+    %% ==========================================
+    subgraph CoreBackend ["⚙️ HALO Health Core Backend (FastAPI)"]
+        direction TB
+        Gateway["🚦 API Gateway / Load Balancer<br/>(HTTPS/WSS)"]:::backend
+        
+        subgraph Services ["Backend Microservices"]
+            direction LR
+            Auth["🔐 Auth Service<br/>(OAuth2, JWT, Passlib)"]:::backend
+            Session["📚 Session & History<br/>(Thread Management)"]:::backend
+        end
+        
+        Gateway --> Auth
+        Gateway --> Session
+    end
+
+    %% ==========================================
+    %% 3. AI ORCHESTRATION LAYER
+    %% ==========================================
+    subgraph Orchestration ["🧠 AI Agent Orchestration Layer (LangGraph)"]
+        direction TB
+        MasterOrch{{"👑 HALO Health Orchestrator<br/>(Master Router / Planner)<br/>Analyzes Intent & Delegates"}}:::orchestrator
+    end
+
+    %% ==========================================
+    %% 4. HALO Health AGENT ECOSYSTEM
+    %% ==========================================
+    subgraph Ecosystem ["🤖 HALO Health Specialized Agent Ecosystem"]
+        direction TB
+        
+        IRIS["👁️ IRIS (Smart Oculomics)<br/><b>10 Predictive Models:</b><br/>1-2. Demographics (Age/Gender)<br/>3-5. Systemic (Diabetes, BP, Cardio)<br/>6-8. Complications (AMI, Nephro, Neuro)<br/>9-10. Ocular (DR, Macular Edema)<br/><i>Uses Vision Transformers (ViT)</i>"]:::agent
+        
+        PRISM["📄 PRISM (Diagnostic)<br/>Synthesizes Lab Reports<br/>& Clinical Docs"]:::agent
+        
+        SAGE["🧘 SAGE (Wellbeing)<br/>CBT Protocols,<br/>Emotional Support"]:::agent
+        
+        APOLLO["🩺 APOLLO (Virtual Doctor)<br/>Symptom Consultation,<br/>Triage, First-Aid"]:::agent
+        
+        NORA["🍏 NORA (Dietary Expert)<br/>Personalized Nutrition,<br/>Caloric Tracking"]:::agent
+    end
+
+    %% ==========================================
+    %% 5. EXTERNAL INSUCOMPASS RAG FLOW
+    %% ==========================================
+    subgraph InsuCompass ["🧭 COMPASS (InsuCompass-API Node) - External HuggingFace Space"]
+        direction TB
+        CompassGateway(("API Entry Point")):::compass
+        
+        subgraph RAG_Flow ["Agentic RAG StateGraph"]
+            direction TB
+            Router{"Decide Entry Point"}:::compass
+            ProfileBuilder["📝 Profile Builder Node<br/>(Extracts Demographics)"]:::compass
+            PlanRecommender["📈 Plan Recommender Node<br/>(Generates Initial Plans)"]:::compass
+            
+            Reformulate["🔄 Reformulate Query Node<br/>(Makes question standalone)"]:::compass
+            RetrieveGrade{"⚖️ Retrieve & Grade Node<br/>(Vector DB lookup & check)"}:::compass
+            SearchIngest["🌐 Search & Ingest Node<br/>(Live Web Search fallback)"]:::compass
+            GenerateAns["💬 Generate Answer Node<br/>(Advisor Agent Response)"]:::compass
+            
+            Router -- "If Profile Incomplete" --> ProfileBuilder
+            ProfileBuilder -- "Profile Finished" --> PlanRecommender
+            
+            Router -- "If Profile Complete" --> Reformulate
+            Reformulate --> RetrieveGrade
+            RetrieveGrade -- "Relevant Docs Found" --> GenerateAns
+            RetrieveGrade -- "Docs Irrelevant" --> SearchIngest
+            SearchIngest --> GenerateAns
+        end
+        CompassGateway --> Router
+    end
+
+    %% ==========================================
+    %% 6. SHARED TOOLS & DBs & LLMs
+    %% ==========================================
+    subgraph Tools ["🛠️ Shared Agent Tools"]
+        direction LR
+        WebSearch["🔍 Tavily / DuckDuckGo Search"]:::tool
+        HospFinder["🏥 Hospital/Clinic Finder API"]:::tool
+    end
+
+    subgraph DataBase ["💾 Data Persistence Layer"]
+        direction LR
+        RelationalDB[("🗄️ SQLite DB<br/>(Users, Auth, Chat History)")]:::database
+        VectorDB[("🧠 ChromaDB<br/>(Local Persistent Memory per User,<br/>Embeddings, RAG Docs)")]:::database
+        BlobStore[("☁️ Blob Storage (S3/Cloud)<br/>(Medical Scans, Images)")]:::database
+    end
+
+    subgraph LLMs ["☁️ AI Model Providers"]
+        direction LR
+        GeminiPro["🚀 Google Gemini 3.1 Pro<br/>(Complex Reasoning, Vision,<br/>Empathy, Medical Diagnostics)"]:::llm
+        GeminiFlash["⚡ Google Gemini 3 Flash<br/>(Fast Routing, Query Formulation,<br/>Dietary rules)"]:::llm
+    end
+
+    %% ==========================================
+    %% CONNECTIONS & FLOW
+    %% ==========================================
+    
+    %% User to Backend
+    UI --> Gateway
+    
+    %% Backend to Orchestrator
+    Session --> MasterOrch
+    
+    %% Orchestrator routing to Agents
+    MasterOrch ===>|Image/Retinal Scan| IRIS
+    MasterOrch ===>|Lab/Clinical Docs| PRISM
+    MasterOrch ===>|Mental Health/Stress| SAGE
+    MasterOrch ===>|Symptoms/Triage| APOLLO
+    MasterOrch ===>|Diet/Nutrition| NORA
+    MasterOrch ===>|Reports/Charts| VISTA
+    MasterOrch ===>|Insurance/Coverage| CompassGateway
+    
+    %% Agents to Tools
+    APOLLO -.-> HospFinder
+    SAGE -.-> WebSearch
+    NORA -.-> WebSearch
+    SearchIngest -.-> WebSearch
+    PlanRecommender -.-> WebSearch
+    
+    %% Data Storage Links
+    Auth -.-> RelationalDB
+    Session -.-> RelationalDB
+    MasterOrch -.-> RelationalDB
+    
+    PRISM -.-> VectorDB
+    CompassGateway -.-> VectorDB
+    MasterOrch -.-> VectorDB
+    
+    IRIS -.-> BlobStore
+    PRISM -.-> BlobStore
+    
+    %% AI Provider Links
+    MasterOrch -.-> GeminiFlash
+    IRIS -.-> GeminiPro
+    PRISM -.-> GeminiPro
+    SAGE -.-> GeminiPro
+    APOLLO -.-> GeminiPro
+    NORA -.-> GeminiFlash
+    RAG_Flow -.-> GeminiFlash

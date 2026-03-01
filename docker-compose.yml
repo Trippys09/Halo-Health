@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: medora_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - medora_data:/app/data
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - SECRET_KEY=${SECRET_KEY}
+      - INSURANCE_API_BASE_URL=${INSURANCE_API_BASE_URL}
+      - TAVILY_API_KEY=${TAVILY_API_KEY}
+      - DATABASE_URL=sqlite:////app/data/aura.db
+      - CHROMA_DB_PATH=/app/data/chroma
+    env_file:
+      - .env
+    command: uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: medora_frontend
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./frontend:/app
+    environment:
+      - BACKEND_URL=http://backend:8000
+    depends_on:
+      - backend
+    command: streamlit run app.py --server.port 8501 --server.address 0.0.0.0
+
+volumes:
+  medora_data:

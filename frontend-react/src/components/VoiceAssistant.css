@@ -1,0 +1,273 @@
+/* ── Voice Assistant Panel ───────────────────────────────────────────────── */
+.voice-assistant-panel {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 340px;
+    background: var(--bg-card);
+    border-radius: var(--radius-xl);
+    padding: 1.5rem;
+    z-index: 1000;
+    box-shadow: var(--shadow-lg), 0 0 0 1px rgba(15, 82, 186, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.va-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.va-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: var(--primary);
+    font-size: 0.9rem;
+}
+
+.va-close {
+    color: var(--text-muted);
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+}
+
+.va-close:hover {
+    background: var(--bg-dark);
+    color: var(--text-main);
+}
+
+/* Waveform bars */
+.va-waveform {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    height: 40px;
+}
+
+.va-bar {
+    width: 4px;
+    border-radius: 2px;
+    background: var(--border-color);
+    transition: background 0.3s;
+}
+
+/* Static heights for visual interest */
+.va-bar:nth-child(1) {
+    height: 10px;
+}
+
+.va-bar:nth-child(2) {
+    height: 18px;
+}
+
+.va-bar:nth-child(3) {
+    height: 28px;
+}
+
+.va-bar:nth-child(4) {
+    height: 36px;
+}
+
+.va-bar:nth-child(5) {
+    height: 28px;
+}
+
+.va-bar:nth-child(6) {
+    height: 40px;
+}
+
+.va-bar:nth-child(7) {
+    height: 30px;
+}
+
+.va-bar:nth-child(8) {
+    height: 36px;
+}
+
+.va-bar:nth-child(9) {
+    height: 22px;
+}
+
+.va-bar:nth-child(10) {
+    height: 16px;
+}
+
+.va-bar:nth-child(11) {
+    height: 24px;
+}
+
+.va-bar:nth-child(12) {
+    height: 12px;
+}
+
+@keyframes va-pulse {
+
+    0%,
+    100% {
+        transform: scaleY(0.4);
+        background: var(--primary);
+    }
+
+    50% {
+        transform: scaleY(1);
+        background: #0090ff;
+    }
+}
+
+.va-bar.active {
+    animation: va-pulse 0.6s ease-in-out infinite;
+    background: var(--primary);
+}
+
+.va-transcript {
+    width: 100%;
+    min-height: 36px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-main);
+    font-style: italic;
+    padding: 0.5rem;
+    background: var(--bg-darker);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+}
+
+.va-response {
+    width: 100%;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    text-align: center;
+    line-height: 1.5;
+    min-height: 40px;
+}
+
+.va-mic-btn {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(15, 82, 186, 0.35);
+    transition: all 0.2s;
+}
+
+.va-mic-btn:hover {
+    background: var(--primary-hover);
+    transform: scale(1.05);
+}
+
+.va-mic-btn.listening {
+    background: var(--error);
+    animation: pulse-glow 1.5s ease-in-out infinite;
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.35);
+}
+
+@keyframes pulse-glow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 16px rgba(239, 68, 68, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    }
+}
+
+.va-hint {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* Navbar voice button active state */
+.voice-nav-btn.voice-active {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--error);
+}
+
+/* ── Share Menu ──────────────────────────────────────────────────────────── */
+.share-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 220px;
+    z-index: 100;
+    padding: 0.5rem;
+    border-radius: var(--radius-md);
+}
+
+.share-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 0.65rem 0.9rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--text-light);
+    text-align: left;
+    transition: background 0.15s, color 0.15s;
+}
+
+.share-item:hover {
+    background: var(--bg-dark);
+    color: var(--primary);
+}
+
+.share-item.whatsapp:hover {
+    color: #25D366;
+}
+
+.share-divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: 0.35rem 0;
+}
+
+/* ── Chat timestamps ─────────────────────────────────────────────────────── */
+.band-sender-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.band-time {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+.thread-ts {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-left: auto;
+    white-space: nowrap;
+}
+
+.agent-emoji-badge {
+    font-size: 1.5rem;
+    line-height: 1;
+}
