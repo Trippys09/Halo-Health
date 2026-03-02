@@ -64,6 +64,18 @@ const modelInfo = [
     },
 ];
 
+interface TeamMember {
+    name: string;
+    firstName: string;
+    initials: string;
+    role: string;
+    focus: string;
+}
+
+const teamMembers: TeamMember[] = [
+    { name: 'Pavan Bobba', firstName: 'Pavan', initials: 'PB', role: 'Lead Developer', focus: 'Full-Stack & AI Integration' },
+];
+
 const About: React.FC = () => {
     return (
         <div className="about-container animate-fade-in">
