@@ -70,10 +70,11 @@ interface TeamMember {
     initials: string;
     role: string;
     focus: string;
+    email: string;
 }
 
 const teamMembers: TeamMember[] = [
-    { name: 'Pavan Bobba', firstName: 'Pavan', initials: 'PB', role: 'Lead Developer', focus: 'Full-Stack & AI Integration' },
+    { name: 'Pavan Bobba', firstName: 'Pavan', initials: 'PB', role: 'Lead Developer', focus: 'Full-Stack & AI Integration', email: 'pbobba1@student.gsu.edu' },
 ];
 
 const About: React.FC = () => {
